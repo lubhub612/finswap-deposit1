@@ -10,6 +10,13 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
+import { ethers } from 'ethers';
+import polkadotmlmabi from '../../abis/POLKADOT_MLM.json';
+import polkadotabi from '../../abis/POLKADOT_token.json';
+
+const POLKADOT_MLM_CONTRACT_ADDRESS = '0x5E03f8AD520E21fB9E4D2F235DF9733A624c38a7';
+const POLKADOT_TOKEN_ADDRESS = '0xcbb8094939A0D024f037602B8d36b2E00c3acA76';
+
 export default function Home() {
   const [isOwner, setIsOwner] = useState(false);
   const [estimateValue, setEstimateValue] = useState('');
@@ -42,6 +49,36 @@ export default function Home() {
     handleUrl();
     return () => {};
   }, []);
+
+  const PolkadotMLMContract = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const PolkadotMLMContract = new ethers.Contract(
+        POLKADOT_MLM_CONTRACT_ADDRESS,
+        polkadotmlmabi,
+        signer
+      );
+      return PolkadotMLMContract;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const PolkadotContract = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const PolkadotContract = new ethers.Contract(
+        POLKADOT_TOKEN_ADDRESS,
+        polkadotabi,
+        signer
+      );
+      return PolkadotContract;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleUrl = () => {
     try {
@@ -395,6 +432,63 @@ export default function Home() {
     }
   };
 
+  const handleApprovePOLKADOT = async () => {
+
+    try {
+      setButtonStatus('approve');
+      let _PolkadotContract = await PolkadotContract();
+      
+      let _approve = await _PolkadotContract.approve(
+        POLKADOT_MLM_CONTRACT_ADDRESS,
+        ethers.utils.parseEther(depositAmount) 
+      );
+      let waitForTx = await _approve.wait();
+      if (waitForTx) {
+        
+        setButtonStatus('');
+        setApproveBtn(false);
+
+        toast.success('Approved successfull.');
+      }
+    } catch (error) {
+      setButtonStatus('');
+      setApproveBtn(true);
+
+      toast.error('Something went wrong!');
+      console.log(error);
+    }
+  };
+
+  const handleDepositPOLKADOT = async () => {
+   
+
+    try {
+      setButtonStatus('deposit');
+      let _PolkadotMLMContract = await PolkadotMLMContract();
+    
+
+      if (depositAmount <= 0) {
+        return toast.error('Value should be positive.');
+      }
+      
+      
+      let _buy = await _PolkadotMLMContract.reInvestCoin(
+        ethers.utils.parseEther(depositAmount) 
+      );
+      let waitForTx = await _buy.wait();
+      if (waitForTx) {
+        setButtonStatus('');
+        setApproveBtn(false);
+        toast.success('Sucessfully Deposited New Tokens!');
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong!');
+      setButtonStatus('');
+    }
+  };
+
   return (
     <>
       <ToastContainer autoClose={3000} />
@@ -662,7 +756,7 @@ export default function Home() {
                               ) : (
                                 <button
                                   className={`btn btn-outline border-white text-white  withdrawButton`}
-                                  onClick={_handleApprove}
+                                  onClick={handleApprovePOLKADOT}
                                   // onClick={handleShow}
                                 >
                                   APPROVE
@@ -686,7 +780,7 @@ export default function Home() {
                               ) : (
                                 <button
                                   className={`btn btn-outline border-white text-white  withdrawButton`}
-                                  onClick={_handleDeposit}
+                                  onClick={handleDepositPOLKADOT}
                                   // onClick={handleShow}
                                 >
                                   Deposit
