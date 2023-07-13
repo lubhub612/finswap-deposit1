@@ -127,8 +127,8 @@ export default function Home() {
     let currentAccount;
 
     if (window.ethereum) {
-      if (window.ethereum.networkVersion !== '56') {
-        toast.error('Please connect to Binance Mainnet');
+      if (window.ethereum.networkVersion !== '80001') {
+        toast.error('Please connect to Polygon Testnet');
       }
     }
 
@@ -251,8 +251,11 @@ export default function Home() {
     }
   };
   const getUserWalletBalance = async () => {
+
+    //https://greendotfinance.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/redeem_balance.php?address=111
     try {
-      let url = `https://sssworld.live/dashboard/api/balance.php?address=${userAddress}`;
+     // let url = `https://sssworld.live/dashboard/api/balance.php?address=${userAddress}`;
+     let url = `https://greendotfinance.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/redeem_balance.php?address=${userAddress}`;
       let bal = await axios.get(url).then((res, err) => {
         if (err) {
           setUserValid(false);
@@ -461,6 +464,7 @@ export default function Home() {
 
   const handleDepositPOLKADOT = async () => {
    
+    //https://greendotfinance.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/reinvest.php?address2=111&amount=10
 
     try {
       setButtonStatus('deposit');
@@ -477,9 +481,14 @@ export default function Home() {
       );
       let waitForTx = await _buy.wait();
       if (waitForTx) {
+        let depositApi = await axios.get(
+          `https://greendotfinance.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/reinvest.php?address2=${userAddress}&amount=${depositAmount}`
+        );
+        console.log('🚀 ~ const_handleDeposit= ~ depositApi', depositApi);
         setButtonStatus('');
         setApproveBtn(false);
         toast.success('Sucessfully Deposited New Tokens!');
+        getUserWalletBalance();
       }
       
     } catch (error) {
