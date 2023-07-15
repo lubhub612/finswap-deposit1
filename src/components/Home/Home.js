@@ -161,11 +161,12 @@ export default function Home() {
           return res;
         }
       });
-      console.log('🚀 ~ bal ~ bal', bal);
+      let stribal = bal.data[2];
+      let  ans = stribal.split(":").pop();
       if (bal.data == 'Not Valid') {
         setUserWithdrawBalance(0);
       } else {
-        setUserWithdrawBalance(bal.data);
+        setUserWithdrawBalance(ans);
       }
     } catch (error) {
       console.log('🚀 ~ getUserWalletBalance ~ error', error);
@@ -392,6 +393,18 @@ export default function Home() {
 
       {/* withdraw  */}
       <div className='row m-0 p-0'>
+      <div className='col-md-4'>
+              <a href='/'>
+                <img
+                  src='/assets/finswap.png'
+                  // className="img-fluid"
+                  alt='logo'
+                  loading='lazy'
+                  // height={150}
+                  className='myImg'
+                />
+              </a>
+            </div>
         <div className='col-md-12 d-flex justify-content-end '>
           {userAddress ? (
             <button
