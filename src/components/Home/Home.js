@@ -40,10 +40,10 @@ export default function Home() {
   const [enterAddress, setEnterAddress] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    console.log('handle show withdraw');
+   
     setShow(true);
 
-  //  getPopUpValue();
+
   };
 
   useEffect(() => {
@@ -86,8 +86,7 @@ export default function Home() {
       let url = window.location.href;
       let id = url.split('=')[1];
       setRefId(id);
-      console.log('🚀 ~ handleUrl ~ id', id);
-      console.log('🚀 ~ handleUrl ~ url', url);
+     
     } catch (error) {
       console.log('🚀 ~ handleUrl ~ error', error);
     }
@@ -158,7 +157,7 @@ export default function Home() {
           console.log('err', err);
         }
         if (res) {
-          console.log('🚀 ~ bal ~ res', res);
+         
           setUserValid(true);
           return res;
         }
@@ -177,7 +176,7 @@ export default function Home() {
 
   const getUserInvestLimitBalance = async () => {
 
-    //https://greendotfinance.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/sell_coin_limit.php?address2=0xDCC5E686892315BF80541721DC12Daf3EfBEb257
+   
     try {
     
      let url = `https://greendotfinance.com/dashboard/b59c67bf196a4758191e42f76670cebaAPI/sell_coin_limit.php?address2=${userAddress}`;
@@ -210,12 +209,11 @@ export default function Home() {
   }, [userAddress]);
 
   const getAdmin = async () => {
-    console.log('🚀 ~ getAdmin ~ userAddress', userAddress);
+   
     try {
       if (userAddress) {
         let owner = await MLM.owner();
-        console.log('🚀 ~ getAdmin ~ owner', owner);
-        console.log('🚀 ~ getAdmin ~ userAddress', userAddress);
+      
         if (userAddress.toLowerCase() == owner.toLowerCase()) {
           console.log('valid');
           setIsOwner(true);
