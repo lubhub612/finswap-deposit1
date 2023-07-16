@@ -92,7 +92,7 @@ export default function Home() {
     }
   };
 
-  // const web3Provider = new providers.Web3Provider(provider);
+  
 
   useEffect(() => {
     if (userAddress) {
@@ -103,9 +103,7 @@ export default function Home() {
   }, [userAddress]);
 
   const handleWalletConnect = async () => {
-    // try {
-    //   await provider.enable();
-    // } catch (error) {}
+    
     if (window.ethereum) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
@@ -320,6 +318,11 @@ export default function Home() {
     }
   };
 
+
+ 
+
+
+
   return (
     <>
       <ToastContainer autoClose={3000} />
@@ -332,24 +335,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* <div className='row'>
-        <div className='col-md-12  d-flex justify-content-center'>
-          {isOwner ? (
-            <Link
-              to={'/admin'}
-              className='dashBoard wallet  btn btn-outline border-white text-white withdrawButton'
-            >
-              Admin
-            </Link>
-          ) : (
-            ''
-          )}
-        </div>
-      </div> */}
+      
 
-      {/* handle address  */}
-
-      {/* handle login  */}
+     
       {!isValid ? (
         <div className='container -fluid '>
           <div className='row mt-5'>
@@ -358,7 +346,7 @@ export default function Home() {
                 <div
                   className='col-lg-5 col-md-8  p-4 m-2 shadow2 rounded-1 '
                   style={{
-                  //  backgroundColor: 'rgb(20 21 51)',
+                  
                   backgroundImage:`url(${process.env.PUBLIC_URL+ "./assets/green_leave154.jpg"})`
                   }}
                 >
@@ -366,12 +354,12 @@ export default function Home() {
                     <div className='row'>
                       <div className='col-md-12 d-flex justify-content-center'>
                         <img
-                         // src='./assets/sss_world.png'
+                         
                          src='./assets/finswap.png' 
-                         // className="img-fluid"
+                         
                           alt='logo'
                           loading='lazy'
-                          // height={150}
+                          
                           className='myImg'
                         />
                       </div>
@@ -401,7 +389,7 @@ export default function Home() {
                           </div>
                         ) : (
                           <button
-                           // onClick={handleUserLogin}
+                           
                             className='btn btn-outline border-white text-white withdrawButton'
                           >
                             Login
@@ -418,7 +406,7 @@ export default function Home() {
                           </div>
                         ) : (
                           <button
-                         //   onClick={handleUserRegister}
+                         
                             className='btn btn-outline border-white text-white withdrawButton'
                           >
                             Register
@@ -436,26 +424,34 @@ export default function Home() {
         ''
       )}
 
-      {/* withdraw  */}
+    
       <div className='row m-0 p-0'>
       <div className='col-md-4'>
-              <a href='/'>
-                <img
-                src='/assets/greendotfinlogo.png'
-                 // src='/assets/finswap.png'
-                  // className="img-fluid"
-                  alt='logo'
-                  loading='lazy'
-                  // height={150}
-                  className='myImg'
-                />
-              </a>
+      {userAddress ? (
+        <Link to={`https://greendotfinance.com/dashboard/dashboard.php?address=${userAddress}`} target="_blank">
+            <button
+              className='dashBoard wallet  btn btn-outline border-white text-white withdrawButton'
+              disabled
+              style={{
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                width: '160px',
+                whiteSpace: 'nowrap',
+                color: 'black',
+              }}
+            >
+              DashBoard
+            </button>
+            </Link>
+          ) : (
+            ''
+          )}
             </div>
         <div className='col-md-12 d-flex justify-content-end '>
           {userAddress ? (
             <button
               className='dashBoard wallet  btn btn-outline border-white text-white withdrawButton'
-              // onClick={handleWalletConnect}
+            
 
               disabled
               style={{
@@ -484,7 +480,7 @@ export default function Home() {
               <div
                 className='col-lg-5 col-md-8  p-2 m-2 shadow2 rounded-1'
                 style={{
-                //  backgroundColor: 'rgb(255 255 255)',
+               
                 backgroundImage:`url(${process.env.PUBLIC_URL+ "./assets/green_leave154.jpg"})`
                 }}
               >
@@ -501,31 +497,7 @@ export default function Home() {
                       RE INVEST
                     </button>
                   </div>
-                  {/*
-                  <div className='col-md-12 d-flex justify-content-center'>
-                        <img
-                         // src='./assets/sss_world.png'
-                         src='./assets/finswap.png' 
-                         // className="img-fluid"
-                          alt='logo'
-                          loading='lazy'
-                          // height={150}
-                          className='myImg'
-                        />
-                      </div>
-                    */}
-                {/*}  <div className='col d-flex justify-content-center'>
-                    <button
-                      onClick={() => setToggleCard('withdraw')}
-                      className={`btn btn-outline border-white text-white ${
-                        toggleCard === 'withdraw'
-                          ? 'activeButton'
-                          : 'withdrawButton'
-                      }`}
-                    >
-                      WITHDRAW
-                    </button>
-                    </div>  */}
+                 
                 </div>
 
                 {toggleCard === 'deposit' ? (
@@ -582,7 +554,7 @@ export default function Home() {
                             value={depositAmount}
                             onChange={(e) => {
                               setDepositamount(e.target.value);
-                              //getEstimateToken(e.target.value);
+                          
                             }}
                           />
                           <p
@@ -615,7 +587,7 @@ export default function Home() {
                                 <button
                                   className={`btn btn-outline border-white text-white  withdrawButton`}
                                   onClick={handleApprovePOLKADOT}
-                                  // onClick={handleShow}
+                                  
                                 >
                                   APPROVE
                                 </button>
@@ -639,7 +611,7 @@ export default function Home() {
                                 <button
                                   className={`btn btn-outline border-white text-white  withdrawButton`}
                                   onClick={handleDepositPOLKADOT}
-                                  // onClick={handleShow}
+                                  
                                 >
                                   Re Invest
                                 </button>
@@ -677,7 +649,7 @@ export default function Home() {
                             }}
                           >
                             (My Balance) - ({userWithdrawBalance}
-                            {' FTC COIN'})
+                            {' POLKADOT '})
                           </p>
                         </div>
                       </div>
@@ -691,7 +663,7 @@ export default function Home() {
                        }}
                           >
                             {' '}
-                            Enter USD Amount
+                            Enter Polkadot Amount
                           </label>
                           <input
                             style={{
@@ -708,10 +680,10 @@ export default function Home() {
                             value={withdrawValue}
                             onChange={(e) => {
                               setWithdrawValue(e.target.value);
-                              //_estimatedCreditValue(e.target.value);
+                              
                             }}
                           />
-                            <p className='pt-2' style={{fontSize:'12px'}}>CREDIT : {estimateWithdrawValue ??'0'} FTC COIN</p>
+                            <p className='pt-2' style={{fontSize:'12px'}}>CREDIT : {estimateWithdrawValue ??'0'} Polkadot</p>
 
                         </div>
                       </div>
@@ -723,8 +695,7 @@ export default function Home() {
                           {!handleWithdrawLoader ? (
                             <button
                               className='btn btn-outline border-white text-white withdrawButton'
-                              //onClick={handleWithdraw}
-                              // onClick={handleShow}
+                              
                             >
                               Withdraw
                             </button>
@@ -759,26 +730,7 @@ export default function Home() {
             ''
           )}
 
-          {/* <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <h4 className='text-dark'>Transaction </h4>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p className='text-dark'>Are you sure ?</p>
-              <p className='text-dark'>Withdraw Value {popUpwithdrawValue}</p>
-              <p className='text-dark'>Claim Value {popUpClaimValue} </p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant='danger' onClick={handleClose}>
-                Reject
-              </Button>
-              <Button variant='primary' onClick={handleWithdraw}>
-                Confirm
-              </Button>
-            </Modal.Footer>
-          </Modal> */}
+          
         </div>
       ) : (
         ''
